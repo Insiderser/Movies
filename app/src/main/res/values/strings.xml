@@ -1,0 +1,50 @@
+<!--
+  ~ Copyright (c) 2019 Oleksandr Bezushko
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  -->
+
+<resources>
+    <string name="app_name">Movies</string>
+    <string name="movies">Movies</string>
+    <string name="tv_shows">TV shows</string>
+    <string name="favourites">Favourites</string>
+    <string name="about">About</string>
+    <string name="no_internet">No Internet available.</string>
+    <string name="reviews">Reviews</string>
+    <string name="rating_content_description">Average vote: %.1f out of 10</string>
+    <string name="favourite">Favourite</string>
+    <string name="unfavourite">Unfavourite</string>
+    <string name="favourites_no_items">Your favorites appear here</string>
+    <string name="powered_by">Powered by the Movie DB</string>
+    <string name="github_repository">GitHub repository</string>
+    <string name="retry">Retry</string>
+    <string name="sort_by">Sort by</string>
+    <string name="popularity">Popularity</string>
+    <string name="revenue">Revenue</string>
+    <string name="vote_count">Vote Count</string>
+    <string name="no_results_found">No results found.</string>
+    <string name="can_t_find_any_movie_matching_your_search">Can\'t find any movie matching your search.</string>
+    <string name="search_movies">Search movies</string>
+    <string name="runtime">Runtime</string>
+    <string name="hours_short">h</string>
+    <string name="minutes_short">m</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="query_suggestion_deletion_dialog_title">Delete \"%s\" from your history?</string>
+    <string name="recommended">Recommended</string>
+    <string name="similar_movies">Similar movies</string>
+    <string name="show_more">Show more</string>
+    <string name="show_details">Show details</string>
+    <string name="details">Details</string>
+    <string name="certificate">Certificate</string>
+    <string name="budget">Budget</string>
+    <string name="open_tmdb">Open TMDB page</string>
+    <string name="open_imdb">Open IMDB page</string>
+    <string name="home">Home</string>
+    <string name="now_popular">Now popular</string>
+    <string name="top_revenue">Top revenue</string>
+</resources>
