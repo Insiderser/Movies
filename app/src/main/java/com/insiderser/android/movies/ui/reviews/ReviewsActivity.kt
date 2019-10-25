@@ -80,7 +80,7 @@ class ReviewsActivity : AppCompatActivity() {
         viewModel.reviews.observe(this, Observer(reviewsAdapter::submitList))
     }
     
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean = when(item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId) {
         android.R.id.home -> {
             finish()
             true
