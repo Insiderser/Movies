@@ -29,9 +29,18 @@ plugins {
 }
 
 String getTmdbApiKey() {
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file("keys.properties").newInputStream())
-    return properties.getProperty("tmdbApiKey")
+    Properties localProperties = new Properties()
+
+    project.rootProject.file("keys.properties").withInputStream { io ->
+        localProperties.load(io)
+    }
+
+    if (localProperties.containsKey("tmdbApiKey")) {
+        return localProperties.getProperty("tmdbApiKey")
+    } else {
+        throw new MissingPropertyException(
+                "You must specify tmdbApiKey property in keys.properties")
+    }
 }
 
 JavaVersion javaVersion = JavaVersion.VERSION_1_8
