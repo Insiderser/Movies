@@ -9,7 +9,7 @@ spare time. Now I don't have much time to devote to this project.
 
  - Download/pull/fork this repository.
  
- - In [`keys.properties`](keys.properties) file create property named 
+ - In `local.properties` file create property named 
    `tmdbApiKey` and assign it to your API key 
    (you can get one [here](https://www.themoviedb.org/settings/api)).
    

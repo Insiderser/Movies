@@ -31,7 +31,7 @@ plugins {
 String getTmdbApiKey() {
     Properties localProperties = new Properties()
 
-    project.rootProject.file("keys.properties").withInputStream { io ->
+    project.rootProject.file("local.properties").withInputStream { io ->
         localProperties.load(io)
     }
 
@@ -39,7 +39,7 @@ String getTmdbApiKey() {
         return localProperties.getProperty("tmdbApiKey")
     } else {
         throw new MissingPropertyException(
-                "You must specify tmdbApiKey property in keys.properties")
+                "You must specify tmdbApiKey property in local.properties")
     }
 }
 
