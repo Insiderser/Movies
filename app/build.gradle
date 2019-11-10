@@ -85,7 +85,7 @@ dependencies {
     kapt("androidx.room:room-compiler:2.2.1")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.work:work-runtime-ktx:2.2.0")
-    implementation("com.android.support:customtabs:29.0.0")
+    implementation("androidx.browser:browser:1.0.0")
 
     implementation("com.github.arimorty:floatingsearchview:2.1.1")
 
