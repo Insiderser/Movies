@@ -22,40 +22,40 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refr_layout"
-        refreshing="@{safeUnbox(isRefreshing)}"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
-            android:id="@+id/list_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ViewStub
-                android:id="@+id/empty_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list"
-                hasFixedSize="@{true}"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="com.insiderser.android.movies.widget.FixGridLayoutManager"
-                app:spanCount="@integer/poster_list_span_count"
-                tools:listitem="@layout/list_item_poster" />
-        </FrameLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="isRefreshing"
-            type="androidx.lifecycle.LiveData&lt;Boolean>" />
+                name="isRefreshing"
+                type="androidx.lifecycle.LiveData&lt;Boolean>" />
     </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refr_layout"
+            refreshing="@{safeUnbox(isRefreshing)}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <FrameLayout
+                android:id="@+id/list_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ViewStub
+                    android:id="@+id/empty_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list"
+                    hasFixedSize="@{true}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="com.insiderser.android.movies.widget.FixGridLayoutManager"
+                    app:spanCount="@integer/poster_list_span_count"
+                    tools:listitem="@layout/list_item_poster" />
+        </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>
