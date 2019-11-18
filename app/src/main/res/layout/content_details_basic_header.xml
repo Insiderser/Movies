@@ -22,107 +22,107 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="@layout/activity_details_basic">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:showIn="@layout/activity_details_basic">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/root_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:paddingTop="115dp">
-
-        <TextView
-            android:id="@+id/title"
-            horizontalWeight="@{@integer/poster_list_span_count - 1}"
-            android:layout_width="0dp"
+            android:id="@+id/root_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="16dp"
-            android:text="@{details.title}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/thumbnail_CardView"
-            app:layout_constraintTop_toTopOf="@id/thumbnail_CardView"
-            tools:layout_constraintHorizontal_weight="1"
-            tools:text="Avengers: Infinity War" />
-
-        <TextView
-            android:id="@+id/year"
-            visibleOrGone="@{details.releaseYear}"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{String.valueOf(details.releaseYear)}"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="@id/title"
-            app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            tools:text="2018" />
-
-        <TextView
-            android:id="@+id/genres"
-            visibleOrGone="@{details.genres}"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4sp"
-            android:text="@{StringFormatter.formatGenres(details.genres)}"
-            android:textSize="15sp"
-            android:textStyle="italic"
-            app:layout_constraintEnd_toEndOf="@id/title"
-            app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/year"
-            tools:text="Adventure | Action | Fantasy" />
-
-        <TextView
-            android:id="@+id/rating"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4sp"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="@{@string/rating_content_description(details.rating)}"
-            android:drawableStart="@drawable/ic_star_24dp"
-            android:drawablePadding="4sp"
-            android:gravity="center_vertical"
-            android:paddingTop="4sp"
-            android:paddingBottom="4sp"
-            android:text="@{StringFormatter.formatRating(details.rating)}"
-            app:layout_constraintEnd_toEndOf="@id/title"
-            app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/genres"
-            tools:text="7.2" />
+            tools:paddingTop="115dp">
 
         <View
-            android:id="@+id/gradient_background"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/header_gradient_shape"
-            app:layout_constraintBottom_toBottomOf="@id/thumbnail_CardView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0" />
+                android:id="@+id/gradient_background"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/header_gradient_shape"
+                app:layout_constraintBottom_toBottomOf="@id/thumbnail_CardView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0" />
+
+        <TextView
+                android:id="@+id/title"
+                horizontalWeight="@{@integer/poster_list_span_count - 1}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="16dp"
+                android:text="@{details.title}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/thumbnail_CardView"
+                app:layout_constraintTop_toTopOf="@id/thumbnail_CardView"
+                tools:layout_constraintHorizontal_weight="1"
+                tools:text="Avengers: Infinity War" />
+
+        <TextView
+                android:id="@+id/year"
+                visibleOrGone="@{details.releaseYear}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(details.releaseYear)}"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="@id/title"
+                app:layout_constraintStart_toStartOf="@id/title"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                tools:text="2018" />
+
+        <TextView
+                android:id="@+id/genres"
+                visibleOrGone="@{details.genres}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4sp"
+                android:text="@{StringFormatter.formatGenres(details.genres)}"
+                android:textSize="15sp"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="@id/title"
+                app:layout_constraintStart_toStartOf="@id/title"
+                app:layout_constraintTop_toBottomOf="@id/year"
+                tools:text="Adventure | Action | Fantasy" />
+
+        <TextView
+                android:id="@+id/rating"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4sp"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@{@string/rating_content_description(details.rating)}"
+                android:drawableStart="@drawable/ic_star_24dp"
+                android:drawablePadding="4sp"
+                android:gravity="center_vertical"
+                android:paddingTop="4sp"
+                android:paddingBottom="4sp"
+                android:text="@{StringFormatter.formatRating(details.rating)}"
+                app:layout_constraintEnd_toEndOf="@id/title"
+                app:layout_constraintStart_toStartOf="@id/title"
+                app:layout_constraintTop_toBottomOf="@id/genres"
+                tools:text="7.2" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/thumbnail_CardView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="24dp"
-            app:cardElevation="6dp"
-            app:contentPadding="2dp"
-            app:layout_constraintDimensionRatio="h,2:3"
-            app:layout_constraintEnd_toStartOf="@id/title"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+                android:id="@+id/thumbnail_CardView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="24dp"
+                app:cardElevation="6dp"
+                app:contentPadding="2dp"
+                app:layout_constraintDimensionRatio="h,2:3"
+                app:layout_constraintEnd_toStartOf="@id/title"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                tools:ignore="ContentDescription"
-                tools:src="@tools:sample/backgrounds/scenic" />
+                    android:id="@+id/thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    tools:ignore="ContentDescription"
+                    tools:src="@tools:sample/backgrounds/scenic" />
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -132,7 +132,7 @@
         <import type="com.insiderser.android.movies.utils.StringFormatter" />
 
         <variable
-            name="details"
-            type="com.insiderser.android.movies.model.PosterDetails" />
+                name="details"
+                type="com.insiderser.android.movies.model.PosterDetails" />
     </data>
 </layout>
