@@ -22,60 +22,60 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/item_root"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardElevation="8dp">
-
-        <LinearLayout
-            android:id="@+id/wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/author"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:ellipsize="end"
-                android:lines="1"
-                android:text="@{review.author}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@android:color/white"
-                tools:text="@tools:sample/full_names" />
-
-            <TextView
-                android:id="@+id/content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:ellipsize="end"
-                android:maxLines="6"
-                android:text="@{review.content}"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla finibus a diam in sodales. Nulla fringilla ornare sem, eu cursus quam tempor id. Quisque sed nunc vitae leo pretium varius ac sed eros. Duis in bibendum augue. Etiam non elementum magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean tempus varius lacus et porta. Nunc mattis posuere velit, id pellentesque nulla.\n\nUt dignissim metus vel arcu accumsan, non varius mauris fringilla. Cras vehicula et dolor et imperdiet. Suspendisse pharetra dolor nisl, nec ullamcorper sem ornare id. Duis ultrices justo sem, ut commodo lorem tristique." />
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_marginTop="2dp"
-                android:background="#757575" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="review"
-            type="com.insiderser.android.movies.model.Review" />
+                name="review"
+                type="com.insiderser.android.movies.model.Review" />
     </data>
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/item_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardElevation="8dp">
+
+        <LinearLayout
+                android:id="@+id/wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+            <TextView
+                    android:id="@+id/author"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@{review.author}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/white"
+                    tools:text="@tools:sample/full_names" />
+
+            <TextView
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ellipsize="end"
+                    android:maxLines="6"
+                    android:text="@{review.content}"
+                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla finibus a diam in sodales. Nulla fringilla ornare sem, eu cursus quam tempor id. Quisque sed nunc vitae leo pretium varius ac sed eros. Duis in bibendum augue. Etiam non elementum magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean tempus varius lacus et porta. Nunc mattis posuere velit, id pellentesque nulla.\n\nUt dignissim metus vel arcu accumsan, non varius mauris fringilla. Cras vehicula et dolor et imperdiet. Suspendisse pharetra dolor nisl, nec ullamcorper sem ornare id. Duis ultrices justo sem, ut commodo lorem tristique." />
+
+            <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginTop="2dp"
+                    android:background="#757575" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

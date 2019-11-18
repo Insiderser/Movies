@@ -22,48 +22,48 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="@layout/activity_details_basic">
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/reviews_CardView"
-        visibleOrGone="@{reviews}"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:cardElevation="4dp">
-
-        <LinearLayout
-            android:id="@+id/wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/reviews_list"
-                nestedScrollingEnabled="@{true}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="com.insiderser.android.movies.widget.FixLinearLayoutManager"
-                tools:listitem="@layout/list_item_reviews" />
-
-            <com.insiderser.android.movies.widget.LabelView
-                android:id="@+id/reviews_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="?attr/selectableItemBackground"
-                android:paddingTop="16dp"
-                app:labelText="@string/reviews" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:showIn="@layout/activity_details_basic">
 
     <data>
 
         <variable
-            name="reviews"
-            type="java.util.List&lt;com.insiderser.android.movies.model.Review>" />
+                name="reviews"
+                type="java.util.List&lt;com.insiderser.android.movies.model.Review>" />
     </data>
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/reviews_CardView"
+            visibleOrGone="@{reviews}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardElevation="4dp">
+
+        <LinearLayout
+                android:id="@+id/wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <com.insiderser.android.movies.widget.LabelView
+                    android:id="@+id/reviews_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingTop="16dp"
+                    app:labelText="@string/reviews" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/reviews_list"
+                    nestedScrollingEnabled="@{true}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="com.insiderser.android.movies.widget.FixLinearLayoutManager"
+                    tools:listitem="@layout/list_item_reviews" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </layout>

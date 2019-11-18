@@ -24,38 +24,38 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group
-        android:id="@+id/main"
-        android:checkableBehavior="single">
+            android:id="@+id/main"
+            android:checkableBehavior="single">
 
         <item
-            android:id="@+id/home"
-            android:icon="@drawable/ic_home_menu_24dp"
-            android:title="@string/home" />
+                android:id="@+id/home"
+                android:icon="@drawable/ic_home_menu_24dp"
+                android:title="@string/home" />
 
         <item
-            android:id="@+id/discover_movies"
-            android:icon="@drawable/ic_discover_menu_24dp"
-            android:title="@string/movies" />
+                android:id="@+id/discover_movies"
+                android:icon="@drawable/ic_discover_menu_24dp"
+                android:title="@string/movies" />
 
         <item
-            android:id="@+id/discover_tv_shows"
-            android:icon="@drawable/ic_discover_menu_24dp"
-            android:title="@string/tv_shows" />
+                android:id="@+id/discover_tv_shows"
+                android:icon="@drawable/ic_discover_menu_24dp"
+                android:title="@string/tv_shows" />
 
         <item
-            android:id="@+id/favourites"
-            android:icon="@drawable/ic_star_menu_24dp"
-            android:title="@string/favourites" />
+                android:id="@+id/favourites"
+                android:icon="@drawable/ic_star_menu_24dp"
+                android:title="@string/favourites" />
     </group>
 
     <group
-        android:id="@+id/additional"
-        android:checkableBehavior="none">
+            android:id="@+id/additional"
+            android:checkableBehavior="none">
 
         <item
-            android:id="@+id/about"
-            android:icon="@drawable/ic_about_menu_24dp"
-            android:title="@string/about" />
+                android:id="@+id/about"
+                android:icon="@drawable/ic_about_menu_24dp"
+                android:title="@string/about" />
     </group>
 
 </menu>

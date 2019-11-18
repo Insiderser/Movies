@@ -22,54 +22,54 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="@layout/activity_details_basic">
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/root_view"
-        visibleOrGone="@{visibleOrGone}"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
-
-        <LinearLayout
-            android:id="@+id/linear_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list"
-                nestedScrollingEnabled="@{false}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="8dp"
-                app:layoutManager="com.insiderser.android.movies.widget.FixLinearLayoutManager"
-                tools:listitem="@layout/list_item_recommendations" />
-
-            <com.insiderser.android.movies.widget.LabelView
-                android:id="@+id/label_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="?attr/selectableItemBackground"
-                android:paddingTop="8dp"
-                app:labelText="@{label}" />
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:showIn="@layout/activity_details_basic">
 
     <data>
 
         <variable
-            name="label"
-            type="String" />
+                name="label"
+                type="String" />
 
         <variable
-            name="visibleOrGone"
-            type="Object" />
+                name="visibleOrGone"
+                type="Object" />
     </data>
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/root_view"
+            visibleOrGone="@{visibleOrGone}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+        <LinearLayout
+                android:id="@+id/linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <com.insiderser.android.movies.widget.LabelView
+                    android:id="@+id/label_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingTop="8dp"
+                    app:labelText="@{label}" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list"
+                    nestedScrollingEnabled="@{false}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="8dp"
+                    app:layoutManager="com.insiderser.android.movies.widget.FixLinearLayoutManager"
+                    tools:listitem="@layout/list_item_recommendations" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </layout>
