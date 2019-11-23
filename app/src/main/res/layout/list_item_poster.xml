@@ -34,6 +34,7 @@
             android:layout_height="0dp"
             android:foreground="?attr/selectableItemBackground"
             android:scaleType="centerCrop"
+            android:transitionName="@string/transition_poster"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="h,2:3"
             app:layout_constraintEnd_toEndOf="parent"

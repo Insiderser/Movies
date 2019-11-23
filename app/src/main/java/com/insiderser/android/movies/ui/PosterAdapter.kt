@@ -157,8 +157,12 @@ abstract class PosterAdapter(
                     is TvShow -> BasicDetailsActivity.buildIntent(context, poster.id, Type.TV_SHOW)
                     else -> throw IllegalStateException("Unknown Poster implementation: $poster")
                 }
-                
-                context.startActivity(detailsActivityIntent)
+
+                val transitionName = imageView.transitionName
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    activity, imageView, transitionName)
+
+                context.startActivity(detailsActivityIntent, options.toBundle())
             }
         }
 

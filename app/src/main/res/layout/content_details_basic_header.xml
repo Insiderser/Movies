@@ -46,6 +46,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="24dp"
+                android:transitionName="@string/transition_poster"
                 app:cardElevation="6dp"
                 app:contentPadding="2dp"
                 app:layout_constraintDimensionRatio="h,2:3"
