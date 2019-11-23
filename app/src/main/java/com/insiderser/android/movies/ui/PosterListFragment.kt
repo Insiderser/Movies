@@ -52,12 +52,12 @@ import com.insiderser.android.movies.utils.extentions.lazyUnsynchronized
 import kotlinx.android.synthetic.main.list_item_poster.view.*
 
 abstract class PosterListFragment : Fragment() {
-    
+
     protected abstract val source: Source
-    
+
     @get:LayoutRes
     protected abstract val emptyLayoutRes: Int
-    
+
     protected var shouldSwipeRefrLayoutBeEnabled: Boolean = true
         set(value) {
             field = value
@@ -65,40 +65,40 @@ abstract class PosterListFragment : Fragment() {
                 binding.swipeRefrLayout.isEnabled = value
             }
         }
-    
+
     protected lateinit var binding: ListPostersBinding
         private set
-    
+
     private val listAdapter by lazyUnsynchronized {
         PosterListAdapter(this)
     }
-    
+
     @CallSuper
     override fun onCreateView(inflater: LayoutInflater,
             container: ViewGroup?, savedInstanceState: Bundle?): View? =
             ListPostersBinding.inflate(inflater, container, false).also {
                 binding = it
             }.root
-    
+
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.apply {
             lifecycleOwner = this@PosterListFragment
             isRefreshing = source.isRefreshing
-            
+
             list.adapter = listAdapter
-            
+
             swipeRefrLayout.isEnabled = shouldSwipeRefrLayoutBeEnabled
-            
+
             swipeRefrLayout.setOnRefreshListener {
                 reload()
             }
-            
+
             swipeRefrLayout.setColorSchemeResources(android.R.color.holo_red_dark,
                     android.R.color.holo_green_dark,
                     android.R.color.holo_blue_dark,
                     android.R.color.holo_orange_dark)
-            
+
             if(emptyLayoutRes != 0) {
                 emptyView.viewStub?.layoutResource = emptyLayoutRes
                 emptyView.setOnInflateListener { _, inflated ->
@@ -108,26 +108,26 @@ abstract class PosterListFragment : Fragment() {
                 }
             }
         }
-        
+
         source.posters.observe(this, Observer(this::submitPosters))
     }
-    
+
     private fun reload() {
         source.reload()
-        
+
         val isNetworkAvailable = injector.networkInfoProvider.isNetworkAvailable
-        
+
         if(! isNetworkAvailable) {
             Snackbar.make(binding.root, R.string.no_internet, Snackbar.LENGTH_LONG)
                     .setAction(R.string.retry) {
                         reload()
                     }
                     .show()
-            
+
             binding.swipeRefrLayout.isRefreshing = false
         }
     }
-    
+
     private fun submitPosters(posters: List<Poster>?) {
         binding.apply {
             val layoutManager = list.layoutManager
@@ -136,17 +136,17 @@ abstract class PosterListFragment : Fragment() {
                 list.scrollToPosition(0)
 //                }, 200)
             }
-            
+
             listAdapter.submitList(posters)
-            
+
             if(emptyLayoutRes != 0) {
                 setEmptyViewVisibility(emptyView, shouldBeVisible = posters.isNullOrEmpty())
             }
-            
+
             list.visibility = if(posters.isNullOrEmpty()) GONE else VISIBLE
         }
     }
-    
+
     protected open fun setEmptyViewVisibility(emptyView: ViewStubProxy, shouldBeVisible: Boolean) {
         if(shouldBeVisible) {
             if(! emptyView.isInflated) {
@@ -157,31 +157,33 @@ abstract class PosterListFragment : Fragment() {
             emptyView.root?.visibility = GONE
         }
     }
-    
+
     interface Source {
-        
+
         val posters: LiveData<List<Poster>>
-        
+
         val isRefreshing: LiveData<Boolean> get() = MutableLiveData()
-        
-        fun reload() {}
+
+        fun reload() {
+            // Don't do anything by default
+        }
     }
-    
+
     private class PosterListAdapter(fragment: Fragment) :
             PosterAdapter(fragment.requireContext(), GlideApp.with(fragment)) {
-        
+
         override fun onCreatePosterViewHolder(parent: ViewGroup): PosterViewHolder {
             val rootView = parent.inflate(R.layout.list_item_poster)
             return PosterListViewHolder(rootView)
         }
-        
+
         override fun getGlideRequest(item: String): GlideRequest<Drawable> {
             return super.getGlideRequest(item)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
         }
-        
+
         private inner class PosterListViewHolder(rootView: View) : PosterViewHolder(rootView) {
-            
+
             override val imageView: ImageView = rootView.image
         }
     }
