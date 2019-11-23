@@ -56,7 +56,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:background="?attr/selectableItemBackground"
-                    android:paddingTop="8dp"
                     app:labelText="@{label}" />
 
             <androidx.recyclerview.widget.RecyclerView

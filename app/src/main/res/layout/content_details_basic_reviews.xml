@@ -51,9 +51,8 @@
                     android:id="@+id/reviews_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:background="?attr/selectableItemBackground"
-                    android:paddingTop="16dp"
+                    android:paddingTop="8dp"
                     app:labelText="@string/reviews" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -61,6 +60,7 @@
                     nestedScrollingEnabled="@{true}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:transitionName="@string/transition_review"
                     app:layoutManager="com.insiderser.android.movies.widget.FixLinearLayoutManager"
                     tools:listitem="@layout/list_item_reviews" />
         </LinearLayout>
