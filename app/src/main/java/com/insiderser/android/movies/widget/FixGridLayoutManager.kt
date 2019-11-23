@@ -25,6 +25,7 @@ package com.insiderser.android.movies.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -32,22 +33,23 @@ import androidx.recyclerview.widget.RecyclerView
  * Issue: https://stackoverflow.com/questions/35653439/recycler-view-inconsistency-detected-invalid-view-holder-adapter-positionviewh
  */
 class FixGridLayoutManager : GridLayoutManager {
-    
+
     @Suppress("unused")
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int,
             defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
-    
+
     @Suppress("unused")
     constructor(context: Context?, spanCount: Int) : super(context, spanCount)
-    
+
     @Suppress("unused")
     constructor(context: Context?, spanCount: Int, orientation: Int,
             reverseLayout: Boolean) : super(context, spanCount, orientation, reverseLayout)
-    
+
     override fun onLayoutChildren(recycler: RecyclerView.Recycler?, state: RecyclerView.State?) {
         try {
             super.onLayoutChildren(recycler, state)
-        } catch(ignored: IndexOutOfBoundsException) {
+        } catch(e: IndexOutOfBoundsException) {
+            Log.w(javaClass.name, e)
         }
     }
 }

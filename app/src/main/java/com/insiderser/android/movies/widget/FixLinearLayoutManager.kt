@@ -25,6 +25,7 @@ package com.insiderser.android.movies.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -32,22 +33,23 @@ import androidx.recyclerview.widget.RecyclerView
  * Issue: https://stackoverflow.com/questions/35653439/recycler-view-inconsistency-detected-invalid-view-holder-adapter-positionviewh
  */
 class FixLinearLayoutManager : LinearLayoutManager {
-    
+
     @Suppress("unused")
     constructor(context: Context) : super(context)
-    
+
     @Suppress("unused")
     constructor(context: Context, orientation: Int, reverseLayout: Boolean) : super(context,
             orientation, reverseLayout)
-    
+
     @Suppress("unused")
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int,
             defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
-    
+
     override fun onLayoutChildren(recycler: RecyclerView.Recycler?, state: RecyclerView.State?) {
         try {
             super.onLayoutChildren(recycler, state)
-        } catch(ignored: IndexOutOfBoundsException) {
+        } catch(e: IndexOutOfBoundsException) {
+            Log.w(javaClass.name, e)
         }
     }
 }
