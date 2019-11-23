@@ -61,5 +61,5 @@
     <string name="home">Home</string>
     <string name="now_popular">Now popular</string>
     <string name="top_revenue">Top revenue</string>
-    <string name="transition_poster">poster</string>
+    <string name="transition_review">review</string>
 </resources>

@@ -46,6 +46,7 @@
             hasFixedSize="@{true}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:transitionName="@string/transition_review"
             app:layoutManager="com.insiderser.android.movies.widget.FixLinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/list_item_reviews" />

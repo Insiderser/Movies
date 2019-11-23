@@ -31,59 +31,59 @@ import androidx.recyclerview.widget.RecyclerView
 import com.insiderser.android.movies.databinding.ListItemReviewsBinding
 import com.insiderser.android.movies.model.Review
 
-class ReviewsAdapter(private val maxReviewsCount: Int = - 1,
+class ReviewsAdapter(private val maxReviewsCount: Int = -1,
         private val onItemClickCallback: OnReviewItemClickCallback? = null) :
         ListAdapter<Review, ReviewsAdapter.ReviewsViewHolder>(ReviewDiffItemCallback()) {
-    
+
     private val limitReviewsCount = maxReviewsCount >= 0
-    
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewsViewHolder {
         val binding = ListItemReviewsBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false)
-        
+
         return ReviewsViewHolder(binding)
     }
-    
+
     override fun onBindViewHolder(holder: ReviewsViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
-    
+
     override fun getItemCount(): Int {
         val itemCount = super.getItemCount()
-        
-        return if(! limitReviewsCount || itemCount <= maxReviewsCount) itemCount
+
+        return if (!limitReviewsCount || itemCount <= maxReviewsCount) itemCount
         else maxReviewsCount
     }
-    
+
     override fun onViewRecycled(holder: ReviewsViewHolder) {
         holder.bind(null)
     }
-    
+
     inner class ReviewsViewHolder(private val binding: ListItemReviewsBinding) :
             RecyclerView.ViewHolder(binding.root) {
-        
+
         init {
-            if(! limitReviewsCount) {
+            if (!limitReviewsCount) {
                 binding.wrapper.background = null
             }
-            
-            if(onItemClickCallback != null) {
+
+            if (onItemClickCallback != null) {
                 binding.wrapper.setOnClickListener {
                     onItemClickCallback.invoke(adapterPosition)
                 }
             }
         }
-        
+
         fun bind(item: Review?) {
             binding.review = item
         }
     }
-    
+
     private class ReviewDiffItemCallback : DiffUtil.ItemCallback<Review>() {
-        
+
         override fun areItemsTheSame(oldItem: Review, newItem: Review): Boolean =
                 oldItem.id == newItem.id
-        
+
         override fun areContentsTheSame(oldItem: Review, newItem: Review): Boolean =
                 oldItem == newItem
     }
