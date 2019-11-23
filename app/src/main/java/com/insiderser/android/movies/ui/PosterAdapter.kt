@@ -49,13 +49,13 @@ import com.insiderser.android.movies.ui.details.basic.BasicDetailsActivity
 import com.insiderser.android.movies.utils.extentions.inflate
 
 abstract class PosterAdapter(
-    private val activity: Activity,
-    private val glideRequests: GlideRequests,
-    private val displayShowMoreItem: Boolean = false,
-    private val onShowMoreClickCallback: OnShowMoreClickCallback? = null,
-    @LayoutRes private val showMoreItemLayoutRes: Int = 0) :
-    ListAdapter<Poster, RecyclerView.ViewHolder>(PosterDiffItemCallback()),
-    GlideImagePreloader.Source<String> {
+        private val activity: Activity,
+        private val glideRequests: GlideRequests,
+        private val displayShowMoreItem: Boolean = false,
+        private val onShowMoreClickCallback: OnShowMoreClickCallback? = null,
+        @LayoutRes private val showMoreItemLayoutRes: Int = 0) :
+        ListAdapter<Poster, RecyclerView.ViewHolder>(PosterDiffItemCallback()),
+        GlideImagePreloader.Source<String> {
 
     val context: Context = activity
 
@@ -72,11 +72,11 @@ abstract class PosterAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        when (viewType) {
-            VIEW_TYPE_POSTER -> onCreatePosterViewHolder(parent)
-            VIEW_TYPE_SHOW_MORE -> onCreateShowMoreViewHolder(parent)
-            else -> throw IllegalStateException("Invalid view type: $viewType")
-        }
+            when (viewType) {
+                VIEW_TYPE_POSTER -> onCreatePosterViewHolder(parent)
+                VIEW_TYPE_SHOW_MORE -> onCreateShowMoreViewHolder(parent)
+                else -> throw IllegalStateException("Invalid view type: $viewType")
+            }
 
     abstract fun onCreatePosterViewHolder(parent: ViewGroup): PosterViewHolder
 
@@ -85,7 +85,7 @@ abstract class PosterAdapter(
 
         check(layoutRes != 0) {
             "You must initialize showMoreItemLayoutRes " +
-                "before a show-more item is created"
+                    "before a show-more item is created"
         }
 
         val itemView = parent.inflate(layoutRes)
@@ -109,15 +109,15 @@ abstract class PosterAdapter(
         val imageUri = uriBuilder.buildPosterImageUri(item)
 
         return glideRequests.load(imageUri)
-            .centerCrop()
-            .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
     }
 
     override val imageCount: Int get() = super.getItemCount()
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         GlideImagePreloader.attach(this, recyclerView, itemImageWidth,
-            imageHeight = itemImageWidth * 3 / 2)
+                imageHeight = itemImageWidth * 3 / 2)
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
@@ -141,45 +141,54 @@ abstract class PosterAdapter(
     }
 
     override fun getItemViewType(position: Int): Int =
-        if (displayShowMoreItem && position == super.getItemCount())
-            VIEW_TYPE_SHOW_MORE
-        else VIEW_TYPE_POSTER
+            if (displayShowMoreItem && position == super.getItemCount())
+                VIEW_TYPE_SHOW_MORE
+            else VIEW_TYPE_POSTER
 
     abstract inner class PosterViewHolder(rootView: View) :
-        RecyclerView.ViewHolder(rootView) {
+            RecyclerView.ViewHolder(rootView) {
 
         protected abstract val imageView: ImageView
 
         init {
             rootView.setOnClickListener {
-                val detailsActivityIntent = when (val poster = getItem(adapterPosition)) {
-                    is Movie -> BasicDetailsActivity.buildIntent(context, poster.id, Type.MOVIE)
-                    is TvShow -> BasicDetailsActivity.buildIntent(context, poster.id, Type.TV_SHOW)
+                val poster = getItem(adapterPosition)
+                val type = when (poster) {
+                    is Movie -> Type.MOVIE
+                    is TvShow -> Type.TV_SHOW
                     else -> throw IllegalStateException("Unknown Poster implementation: $poster")
                 }
 
                 val transitionName = imageView.transitionName
                 val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    activity, imageView, transitionName)
+                        activity, imageView, transitionName)
+
+                val detailsActivityIntent = BasicDetailsActivity.buildIntent(context,
+                        poster.id,
+                        type,
+                        transitionName)
 
                 context.startActivity(detailsActivityIntent, options.toBundle())
             }
         }
 
         fun bind(item: Poster) {
-            imageView.contentDescription = item.title
-
             val posterPath = item.posterPath
             if (posterPath != null) {
+                imageView.contentDescription = item.title
+                imageView.transitionName = "poster_${item.id}"
+
                 getGlideRequest(posterPath)
-                    .thumbnail(0.25F)
-                    .into(imageView)
+                        .thumbnail(0.25F)
+                        .into(imageView)
             } else {
                 clear()
             }
         }
 
         fun clear() {
+            imageView.contentDescription = null
+            imageView.transitionName = null
             GlideUtils.clear(imageView)
         }
     }
@@ -196,10 +205,10 @@ abstract class PosterAdapter(
     private class PosterDiffItemCallback : DiffUtil.ItemCallback<Poster>() {
 
         override fun areItemsTheSame(oldItem: Poster, newItem: Poster): Boolean =
-            oldItem.id == newItem.id
+                oldItem.id == newItem.id
 
         override fun areContentsTheSame(oldItem: Poster, newItem: Poster): Boolean =
-            oldItem == newItem
+                oldItem == newItem
     }
 
     companion object {

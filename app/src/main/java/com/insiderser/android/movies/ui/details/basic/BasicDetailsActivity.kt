@@ -32,9 +32,14 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.appbar.AppBarLayout
 import com.insiderser.android.movies.R
@@ -67,12 +72,17 @@ class BasicDetailsActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_ID = "id"
         const val EXTRA_TYPE = "type"
+        const val EXTRA_TRANSITION_NAME = "transition_name"
 
         @JvmStatic
-        fun buildIntent(context: Context, id: Int, type: Type): Intent =
+        fun buildIntent(context: Context,
+                id: Int,
+                type: Type,
+                transitionName: String? = null): Intent =
                 Intent(context, BasicDetailsActivity::class.java)
                         .putExtra(EXTRA_ID, id)
                         .putExtra(EXTRA_TYPE, type.toInt())
+                        .putExtra(EXTRA_TRANSITION_NAME, transitionName)
 
         private const val KEY_IMAGE_POSITION_SHOWING_FULLSCREEN = "image position showing fullscreen"
     }
@@ -83,8 +93,8 @@ class BasicDetailsActivity : AppCompatActivity() {
         check(intent.hasExtra(EXTRA_ID)) { "ID must be passed as intent extra" }
         check(intent.hasExtra(EXTRA_TYPE)) { "Type must be passed as intent extra" }
 
-        val movieId = intent.getIntExtra(EXTRA_ID, - 1)
-        val type = intent.getIntExtra(EXTRA_TYPE, - 1).toType()
+        val movieId = intent.getIntExtra(EXTRA_ID, -1)
+        val type = intent.getIntExtra(EXTRA_TYPE, -1).toType()
         injector.getBasicMovieDetailsViewModel().also { viewModel ->
             viewModel.initState(movieId, type)
         }
@@ -125,9 +135,15 @@ class BasicDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_details_basic)
 
+        supportPostponeEnterTransition()
+
         binding.apply {
             setSupportActionBar(toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+            if (intent.hasExtra(EXTRA_TRANSITION_NAME)) {
+                header.thumbnailCardView.transitionName = intent.getStringExtra(EXTRA_TRANSITION_NAME)
+            }
 
             lifecycleOwner = this@BasicDetailsActivity
             details = viewModel.details
@@ -162,7 +178,7 @@ class BasicDetailsActivity : AppCompatActivity() {
                     val normalizedOffset = abs(verticalOffset)
                     val previousOffset = previousOffset
 
-                    if(normalizedOffset > previousOffset) {
+                    if (normalizedOffset > previousOffset) {
                         scrollView.scrollTo(0, normalizedOffset)
                     }
 
@@ -210,14 +226,14 @@ class BasicDetailsActivity : AppCompatActivity() {
     }
 
     private fun submitImages(videos: List<Video>?, backdrops: List<String>?) {
-        val isMovieFullyCached = (! videos.isNullOrEmpty())
+        val isMovieFullyCached = (!videos.isNullOrEmpty())
                 || (backdrops != null && backdrops.size > 1)
 
         binding.images.root.visibility =
-                if(! isMovieFullyCached) GONE
+                if (!isMovieFullyCached) GONE
                 else VISIBLE
 
-        if(isMovieFullyCached) {
+        if (isMovieFullyCached) {
             imagesAdapter.submitList(videos, backdrops)
         }
     }
@@ -238,7 +254,7 @@ class BasicDetailsActivity : AppCompatActivity() {
             viewModel.isReloading.value == true -> GONE
             else -> {
                 emptyView.viewStub?.inflate()
-                emptyView.root !!.visibility = VISIBLE
+                emptyView.root!!.visibility = VISIBLE
                 GONE
             }
         }
@@ -269,7 +285,7 @@ class BasicDetailsActivity : AppCompatActivity() {
         val youTubeIntent = Intent(Intent.ACTION_VIEW, youTubeUri)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-        if(youTubeIntent.resolveActivity(packageManager) != null) {
+        if (youTubeIntent.resolveActivity(packageManager) != null) {
             startActivity(youTubeIntent)
         }
     }
@@ -300,8 +316,9 @@ class BasicDetailsActivity : AppCompatActivity() {
 
     private fun loadPoster(details: PosterDetails?) {
         binding.header.thumbnail.let { thumbnailView ->
-            if(details != null) {
+            if (details != null) {
                 getPosterGlideRequest(details.posterPath)
+                        .listener(ResumePostponedTransitionRequestListener())
                         .into(thumbnailView)
             } else {
                 GlideUtils.clear(thumbnailView)
@@ -311,12 +328,12 @@ class BasicDetailsActivity : AppCompatActivity() {
 
     private fun loadBackdrop(details: PosterDetails?) {
         binding.backdrop.also { backdropView ->
-            if(details != null) {
+            if (details != null) {
                 val errorRequest = getPosterGlideRequest(details.posterPath)
 
                 val backdropPath = details.backdropPaths.getOrNull(0)
 
-                if(backdropPath != null) {
+                if (backdropPath != null) {
                     val backdropImageUri = injector.tmdbUriBuilder.buildBackdropImageUri(
                             backdropPath)
 
@@ -324,6 +341,7 @@ class BasicDetailsActivity : AppCompatActivity() {
                             .load(backdropImageUri)
                             .centerCrop()
                             .thumbnail(0.15F)
+                            .priority(Priority.HIGH)
                             .error(errorRequest)
                             .diskCacheStrategy(DiskCacheStrategy.DATA)
                             .thumbnail(0.2F)
@@ -339,17 +357,18 @@ class BasicDetailsActivity : AppCompatActivity() {
 
     private fun getPosterGlideRequest(posterPath: String?): GlideRequest<Drawable> {
         val imageUri =
-                if(posterPath != null)
+                if (posterPath != null)
                     injector.tmdbUriBuilder.buildPosterImageUri(posterPath)
                 else null
 
         return GlideApp.with(this)
                 .load(imageUri)
                 .centerCrop()
+                .priority(Priority.IMMEDIATE)
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         android.R.id.home -> {
             supportFinishAfterTransition()
             true
@@ -368,9 +387,28 @@ class BasicDetailsActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
-        if(savedInstanceState.containsKey(KEY_IMAGE_POSITION_SHOWING_FULLSCREEN)) {
+        if (savedInstanceState.containsKey(KEY_IMAGE_POSITION_SHOWING_FULLSCREEN)) {
             val position = savedInstanceState.getInt(KEY_IMAGE_POSITION_SHOWING_FULLSCREEN)
             showImageFullscreen(position)
+        }
+    }
+
+    inner class ResumePostponedTransitionRequestListener : RequestListener<Drawable?> {
+        override fun onLoadFailed(e: GlideException?,
+                model: Any?,
+                target: Target<Drawable?>?,
+                isFirstResource: Boolean): Boolean {
+            supportStartPostponedEnterTransition()
+            return false
+        }
+
+        override fun onResourceReady(resource: Drawable?,
+                model: Any?,
+                target: Target<Drawable?>?,
+                dataSource: DataSource?,
+                isFirstResource: Boolean): Boolean {
+            supportStartPostponedEnterTransition()
+            return false
         }
     }
 }
