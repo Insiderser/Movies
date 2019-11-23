@@ -272,7 +272,12 @@ class BasicDetailsActivity : AppCompatActivity() {
 
     private fun showAllReviews(position: Int = ReviewsActivity.NO_POSITION) {
         val reviewsIntent = ReviewsActivity.buildIntent(this, viewModel.id, position)
-        startActivity(reviewsIntent)
+
+        val reviewsListView = binding.reviews.reviewsList
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                reviewsListView, reviewsListView.transitionName)
+
+        startActivity(reviewsIntent, options.toBundle())
     }
 
     private fun showMovieDetails() {
