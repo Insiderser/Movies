@@ -34,44 +34,47 @@ import com.insiderser.android.movies.R
 class StarView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null) :
         AppCompatCheckBox(context, attrs, android.R.attr.starStyle) {
-    
+
     private val starCheckedObserver = Observer<Boolean> { isChecked ->
         setChecked(isChecked)
     }
-    
+
+    private var externalCheckedChangeListener: OnCheckedChangeListener? = null
+
     var source: Source? = null
         set(value) {
             field?.isStarChecked?.removeObserver(starCheckedObserver)
-            
+
             field = value
-            
+
             source?.isStarChecked?.observe(context as LifecycleOwner, starCheckedObserver)
         }
-    
+
     init {
-        super.setOnCheckedChangeListener { _, isChecked ->
+        super.setOnCheckedChangeListener { buttonView, isChecked ->
             source?.apply {
-                if(isChecked) onChecked()
+                if (isChecked) onChecked()
                 else onUnchecked()
             }
-            
+
             contentDescription = context.getString(
-                    if(isChecked) R.string.unfavourite
+                    if (isChecked) R.string.unfavourite
                     else R.string.favourite)
+
+            externalCheckedChangeListener?.onCheckedChanged(buttonView, isChecked)
         }
     }
-    
-    @Deprecated(level = DeprecationLevel.HIDDEN, message = "For internal use only")
+
     override fun setOnCheckedChangeListener(listener: OnCheckedChangeListener?) {
-        throw IllegalStateException("For internal use only")
+        externalCheckedChangeListener = listener
     }
-    
+
     interface Source {
-        
+
         val isStarChecked: LiveData<Boolean>
-        
+
         fun onChecked()
-        
+
         fun onUnchecked()
     }
 }
