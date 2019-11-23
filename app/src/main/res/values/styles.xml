@@ -40,6 +40,7 @@
 
     <style name="AppTheme.NoActionBar.TransparentStatusBar">
         <item name="android:windowTranslucentStatus">@bool/translucentStatus_transparent</item>
+        <item name="android:statusBarColor">#50000000</item>
     </style>
 
     <style name="AppTheme.LoadingScreen">
