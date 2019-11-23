@@ -186,19 +186,6 @@ class BasicDetailsActivity : AppCompatActivity() {
                 }
             })
 
-            /*scrollView.setOnScrollChangeListener { _: NestedScrollView, _, scrollY, _, oldScrollY ->
-                val totalScrollRange = appBar.totalScrollRange
-
-                val offsetBy = if(scrollY < oldScrollY && scrollY < totalScrollRange) {
-                    min(totalScrollRange, oldScrollY) - scrollY
-                } else if(scrollY > oldScrollY && oldScrollY < totalScrollRange) {
-                    oldScrollY - max(totalScrollRange, scrollY)
-                } else
-                    return@setOnScrollChangeListener
-
-                ViewCompat.offsetTopAndBottom(appBar, offsetBy)
-            }*/
-
             header.root.afterLayout {
                 val paddingTop = (backdrop.height - statusBarHeight -
                         toolbar.height - header.thumbnailCardView.height / 2F)
