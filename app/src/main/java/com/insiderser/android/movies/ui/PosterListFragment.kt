@@ -170,7 +170,7 @@ abstract class PosterListFragment : Fragment() {
     }
 
     private class PosterListAdapter(fragment: Fragment) :
-            PosterAdapter(fragment.requireContext(), GlideApp.with(fragment)) {
+            PosterAdapter(fragment.requireActivity(), GlideApp.with(fragment)) {
 
         override fun onCreatePosterViewHolder(parent: ViewGroup): PosterViewHolder {
             val rootView = parent.inflate(R.layout.list_item_poster)
