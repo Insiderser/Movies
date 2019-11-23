@@ -27,6 +27,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -40,6 +41,7 @@
 
     <style name="AppTheme.NoActionBar.TransparentStatusBar">
         <item name="android:windowTranslucentStatus">@bool/translucentStatus_transparent</item>
+        <item name="android:statusBarColor">#50000000</item>
     </style>
 
     <style name="AppTheme.LoadingScreen">
