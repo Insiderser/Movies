@@ -27,6 +27,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.insiderser.android.movies.R
@@ -34,17 +37,40 @@ import com.insiderser.android.movies.databinding.ActivityAboutBinding
 
 class AboutActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityAboutBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityAboutBinding = DataBindingUtil.setContentView(this,
+        binding = DataBindingUtil.setContentView(this,
                 R.layout.activity_about)
+
+        binding.root.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+
+        binding.root.setOnApplyWindowInsetsListener { _, insets ->
+            applyWindowInsets(insets)
+            return@setOnApplyWindowInsetsListener insets
+        }
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.repo.setOnClickListener {
             openGithubRepo()
+        }
+    }
+
+    private fun applyWindowInsets(insets: WindowInsets) {
+        val statusBarHeight = insets.systemWindowInsetTop
+
+        binding.root.apply {
+            val layoutParams = layoutParams as ViewGroup.MarginLayoutParams
+            layoutParams.apply {
+                this.setMargins(leftMargin, statusBarHeight, rightMargin,
+                        bottomMargin)
+            }
+            this.layoutParams = layoutParams
         }
     }
 

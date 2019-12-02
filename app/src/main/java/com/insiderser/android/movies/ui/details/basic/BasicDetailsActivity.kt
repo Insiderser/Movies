@@ -154,6 +154,9 @@ class BasicDetailsActivity : AppCompatActivity() {
 
     private fun initViews() {
         binding.apply {
+            root.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+
             setSupportActionBar(toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

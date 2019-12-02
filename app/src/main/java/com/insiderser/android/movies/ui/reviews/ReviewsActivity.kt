@@ -1,24 +1,24 @@
 /*
- * Copyright (c) 2019 Oleksandr Bezushko
+ * Copyright 2019 Oleksandr Bezushko
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall
- * be included in all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
- * OR OTHER DEALINGS IN THE SOFTWARE.
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 package com.insiderser.android.movies.ui.reviews
@@ -29,6 +29,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.insiderser.android.movies.R
@@ -79,6 +82,14 @@ class ReviewsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reviews)
 
+        coordinator_layout.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+
+        coordinator_layout.setOnApplyWindowInsetsListener { _, insets ->
+            applyWindowInsets(insets)
+            return@setOnApplyWindowInsetsListener insets
+        }
+
         supportPostponeEnterTransition()
 
         setSupportActionBar(toolbar)
@@ -95,10 +106,23 @@ class ReviewsActivity : AppCompatActivity() {
             }, 300)
         }
 
-        viewModel.reviews.observe(this, Observer(this::setReviewsForList))
+        viewModel.reviews.observe(this, Observer(this::setReviews))
     }
 
-    private fun setReviewsForList(reviews: List<Review>) {
+    private fun applyWindowInsets(insets: WindowInsets) {
+        val statusBarHeight = insets.systemWindowInsetTop
+
+        coordinator_layout.apply {
+            val layoutParams = layoutParams as ViewGroup.MarginLayoutParams
+            layoutParams.apply {
+                this.setMargins(leftMargin, statusBarHeight, rightMargin,
+                        bottomMargin)
+            }
+            this.layoutParams = layoutParams
+        }
+    }
+
+    private fun setReviews(reviews: List<Review>) {
         reviewsAdapter.submitList(reviews)
 
         handler.postDelayed({
