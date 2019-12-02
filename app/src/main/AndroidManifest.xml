@@ -48,7 +48,7 @@
         <activity
             android:name=".ui.details.basic.BasicDetailsActivity"
             android:label=""
-            android:theme="@style/AppTheme.NoActionBar.TransparentStatusBar" />
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".ui.details.full.FullMovieDetailsActivity"
