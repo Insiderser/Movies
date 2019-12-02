@@ -1,24 +1,24 @@
 /*
- * Copyright (c) 2019 Oleksandr Bezushko
+ * Copyright 2019 Oleksandr Bezushko
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall
- * be included in all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
- * OR OTHER DEALINGS IN THE SOFTWARE.
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 package com.insiderser.android.movies.utils.extentions
@@ -38,7 +38,7 @@ import com.insiderser.android.movies.model.response.tmdb.tv.TmdbTvShow
 import com.insiderser.android.movies.model.response.tmdb.tv.TmdbTvShowDetails
 import com.insiderser.android.movies.model.response.tmdb.videos.TmdbVideo
 import com.insiderser.android.movies.model.search_suggestion.MovieSearchSuggestion
-import com.insiderser.android.movies.model.search_suggestion.PastQuerySearchSuggestion
+import com.insiderser.android.movies.model.search_suggestion.HistorySearchSuggestion
 import com.insiderser.android.movies.model.search_suggestion.TvShowSearchSuggestion
 import com.insiderser.android.movies.model.tv.TvSeason
 import com.insiderser.android.movies.model.tv.TvShow
@@ -60,7 +60,7 @@ fun Movie.toMovieSearchSuggestion() = MovieSearchSuggestion(id, title, posterPat
 
 fun TvShow.toTvShowSearchSuggestion() = TvShowSearchSuggestion(id, title, posterPath)
 
-fun String.toPastQuerySearchSuggestion() = PastQuerySearchSuggestion(
+fun String.toPastQuerySearchSuggestion() = HistorySearchSuggestion(
         this)
 
 fun MoviesEntity.toMovie() = Movie(id, title, posterPath)
@@ -73,10 +73,10 @@ fun TmdbMovieDetails.toMoviesEntity(region: String, language: String): MoviesEnt
             ?.mapNotNull {
                 val releaseDateType = it.type.toReleaseDateType() ?: return@mapNotNull null
                 val releaseDate = it.releaseDate.toTmdbReleaseDate() ?: return@mapNotNull null
-                
+
                 ReleaseDate(it.certification, releaseDate, releaseDateType)
             } ?: emptyList()
-    
+
     return MoviesEntity(id, title, overview, popularity, rating, getTmdbReleaseYear(releaseDate),
             posterPath, images.backdrops.map { it.path }, genres.map { it.id }, tagline,
             runtime ?: MoviesEntity.DEFAULT_VALUE_RUNTIME, budget, revenue, imdbId, reviews.reviews,
@@ -105,12 +105,12 @@ fun getTmdbReleaseYear(releaseDate: String?): Int = releaseDate?.toTmdbReleaseDa
 
 fun String.toTmdbReleaseDate(): Date? {
     val parts = split(Regex("-"), limit = 3)
-    
+
     if(parts.size < 3) return null
-    
+
     val year = parts[0].toInt()
     val month = parts[1].toInt()
     val day = parts[2].substring(0..1).toInt()
-    
+
     return Date(day, month, year)
 }

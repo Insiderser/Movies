@@ -1,24 +1,24 @@
 /*
- * Copyright (c) 2019 Oleksandr Bezushko
+ * Copyright 2019 Oleksandr Bezushko
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall
- * be included in all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
- * OR OTHER DEALINGS IN THE SOFTWARE.
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 package com.insiderser.android.movies.ui.details.basic
@@ -28,8 +28,11 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
+import android.view.WindowInsets
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
@@ -62,9 +65,9 @@ import com.insiderser.android.movies.ui.reviews.ReviewsActivity
 import com.insiderser.android.movies.utils.extentions.afterLayout
 import com.insiderser.android.movies.utils.extentions.lazyUnsynchronized
 import com.insiderser.android.movies.utils.extentions.roundToHigherInt
-import com.insiderser.android.movies.utils.extentions.statusBarHeight
 import com.insiderser.android.movies.utils.extentions.viewModelProvider
 import com.stfalcon.imageviewer.StfalconImageViewer
+import kotlinx.android.synthetic.main.activity_details_basic.*
 import kotlin.math.abs
 
 class BasicDetailsActivity : AppCompatActivity() {
@@ -135,18 +138,32 @@ class BasicDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_details_basic)
 
+        initTransition()
+        initViews()
+        initViewModel()
+    }
+
+    private fun initTransition() {
         supportPostponeEnterTransition()
 
+        if (intent.hasExtra(EXTRA_TRANSITION_NAME)) {
+            binding.header.thumbnailCardView.transitionName = intent.getStringExtra(
+                    EXTRA_TRANSITION_NAME)
+        }
+    }
+
+    private fun initViews() {
         binding.apply {
             setSupportActionBar(toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-            if (intent.hasExtra(EXTRA_TRANSITION_NAME)) {
-                header.thumbnailCardView.transitionName = intent.getStringExtra(EXTRA_TRANSITION_NAME)
-            }
-
             lifecycleOwner = this@BasicDetailsActivity
             details = viewModel.details
+
+            root.setOnApplyWindowInsetsListener { _, insets ->
+                applyWindowInsets(insets)
+                return@setOnApplyWindowInsetsListener insets
+            }
 
             reviews.reviewsList.adapter = reviewsAdapter
             images.imagesList.adapter = imagesAdapter
@@ -185,19 +202,10 @@ class BasicDetailsActivity : AppCompatActivity() {
                     this.previousOffset = normalizedOffset
                 }
             })
-
-            header.root.afterLayout {
-                val paddingTop = (backdrop.height - statusBarHeight -
-                        toolbar.height - header.thumbnailCardView.height / 2F)
-                        .roundToHigherInt()
-
-                this.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
-
-                false
-            }
-
         }
+    }
 
+    private fun initViewModel() {
         viewModel.details.observe(this, Observer { details: PosterDetails? ->
             updateContentVisibility(details)
 
@@ -210,6 +218,30 @@ class BasicDetailsActivity : AppCompatActivity() {
             recommendationsAdapter.submitList(details?.recommendations)
             similarMoviesAdapter.submitList(details?.similar)
         })
+    }
+
+    private fun applyWindowInsets(insets: WindowInsets) {
+        binding.root.apply {
+            val statusBarHeight = insets.systemWindowInsetTop
+
+            val layoutParams = layoutParams as ViewGroup.MarginLayoutParams
+            layoutParams.apply {
+                this.setMargins(leftMargin, statusBarHeight, rightMargin,
+                        bottomMargin)
+            }
+            this.layoutParams = layoutParams
+
+            afterLayout {
+                binding.header.rootView.apply {
+                    val paddingTop = (backdrop.height - toolbar.height -
+                            binding.header.thumbnailCardView.height / 2F)
+                            .roundToHigherInt()
+
+                    setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
+                }
+                false
+            }
+        }
     }
 
     private fun submitImages(videos: List<Video>?, backdrops: List<String>?) {
@@ -370,7 +402,8 @@ class BasicDetailsActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         imageViewer?.let { imageViewer ->
-            outState.putInt(KEY_IMAGE_POSITION_SHOWING_FULLSCREEN, imageViewer.currentPosition())
+            outState.putInt(KEY_IMAGE_POSITION_SHOWING_FULLSCREEN,
+                    imageViewer.currentPosition())
         }
 
         super.onSaveInstanceState(outState)
