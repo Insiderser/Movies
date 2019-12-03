@@ -380,7 +380,7 @@ class MainActivity : AppCompatActivity(),
             suggestion: PosterSearchSuggestion) {
         suggestionView.setOnLongClickListener(null)
 
-        // TODO: network shouldn't be View's business
+        // TODO: network shouldn't be Activity's business
         val networkInfoProvider = injector.networkInfoProvider
         if (networkInfoProvider.isNetworkAvailable &&
                 !networkInfoProvider.isNetworkMetered) {
