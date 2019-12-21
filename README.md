@@ -3,10 +3,15 @@
 An app that lists movies by different sort criteria with the ability
 to search movies. You can also view details of a movie.
 
-It's made using Android Architecture Components & Android Jetpack.
+It's made using Android Architecture Components & Jetpack.
+
+The primary purpose of this app is to **learn** how to build complex apps.
+Practices used here are not necessarily those that I'd use now to build apps.
+This app has a lot of bugs, no strict separation of concerns, no tests, etc.
+Again, this is **my personal experiment**.
 
 **Note**: this is an unfinished project. It was developed in my 
-spare time, but now I don't have much time to devote to this project.
+spare time, and now I don't have much time to devote to this project.
 
 ### Setup project
 
@@ -52,7 +57,7 @@ spare time, but now I don't have much time to devote to this project.
    a movie. Another solution would be to serialize app's SavedState using custom
    SavedState manager mentioned above.
    
- - Backdrop in Details doesn't scroll correctly. Probably requires implementing
+ - Backdrop in Details isn't scrolled correctly. Probably requires implementing
    custom CoordinatorLayout Behavior.
    
  - `TODO`
