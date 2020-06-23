@@ -32,6 +32,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -101,7 +102,8 @@ class MainActivity : AppCompatActivity(),
 
     private fun initViews() {
         drawer_layout.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
         initNavDrawer()
         initSearchView()
@@ -170,10 +172,7 @@ class MainActivity : AppCompatActivity(),
     private fun applyWindowInsets(insets: WindowInsets) {
         val statusBarHeight = insets.systemWindowInsetTop
 
-        search_view.setPadding(search_view.paddingLeft,
-                search_view.paddingTop + statusBarHeight,
-                search_view.paddingRight,
-                search_view.paddingBottom)
+        search_view.updatePadding(top = statusBarHeight)
     }
 
     private fun initViewModel() {
