@@ -5,13 +5,46 @@ to search movies. You can also view details of a movie.
 
 It's made using Android Architecture Components & Jetpack.
 
-The primary purpose of this app is to **learn** how to build complex apps.
+The primary purpose of this app is to **learn** how to build somewhat complex apps.
 Practices used here are not necessarily those that I'd use now to build apps.
-This app has a lot of bugs, no strict separation of concerns, no tests, etc.
+This is an unfinished app that has lots of bugs, no strict separation of concerns, no tests, etc.
 Again, this is **my personal experiment**.
 
-**Note**: this is an unfinished project. It was developed in my 
-spare time, and now I don't have much time to devote to this project.
+### Screenshots
+
+<img src="screenshots/movies.png"
+     alt="List of popular movies"
+     width="300px">
+<img src="screenshots/details.png"
+     alt="Details of the movie Ad Astra"
+     width="300px">
+<img src="screenshots/pictures.png"
+     alt="Details of the movie Ad Astra scrolled to show images"
+     width="300px">
+<img src="screenshots/picture-fullscreen.png"
+     alt="Fullscreen view of a picture"
+     width="300px">
+<img src="screenshots/full-details.png"
+     alt="Other details of the movie"
+     width="300px">
+<img src="screenshots/reviews.png"
+     alt="Reviews"
+     width="300px">
+<img src="screenshots/footer.png"
+     alt="Footer of details screen with recommended and similar movies"
+     width="300px">
+<img src="screenshots/recommendations.png"
+     alt="List of recommended movies"
+     width="300px">
+<img src="screenshots/nav-drawer.png"
+     alt="Navigation drawer with movies, tv shows and favorites destinations"
+     width="300px">
+<img src="screenshots/tv-shows.png"
+     alt="List of popular TV shows"
+     width="300px">
+<img src="screenshots/favorites.png"
+     alt="List of your favorites"
+     width="300px">
 
 ### Setup project
 
@@ -22,42 +55,3 @@ spare time, and now I don't have much time to devote to this project.
    (you can get one [here](https://www.themoviedb.org/settings/api)).
    
  - Build, compile, and deploy on your target device.
-
-### In plans
-
- - **Reformat code to follow best coding practices**.
-
- - Implement **global search**, which allows to search not only movies, but also
-   TV shows and people. See [this](https://developers.themoviedb.org/3/search/multi-search)
-   for more details.
-   
- - Update UI.
-
- - Add **home screen** where users can see short list of now-trending
-   movies, TV shows and potentially much more...
-   
- - Implement **Watchlist** functionality that would allow users to add movies & TV shows
-   to "Watch later" lists. Try reusing Favourites functionality here.
-   
- - Add **account integration** with either TMDB or my own (why not) server solution.
-   Allow users to [create](https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id)
-   their accounts, sync their settings (requires custom server), 
-   [favourites](https://developers.themoviedb.org/3/account/mark-as-favorite)
-   & [watchlist](https://developers.themoviedb.org/3/account/add-to-watchlist)
-   with the server & other devices, 
-   [personalize](https://developers.themoviedb.org/4/account/get-account-movie-recommendations) 
-   content recommendations, etc.
-
-### Known issues
-
- - If a large number of activities have been opened, an `OutOfMemoryException` 
-   might be thrown. Possible solution: implement custom SavedState manager on
-   an application level which, based on system trim messages, would trim SavedState
-   until only necessary information is retained in memory, such as the ID of
-   a movie. Another solution would be to serialize app's SavedState using custom
-   SavedState manager mentioned above.
-   
- - Backdrop in Details isn't scrolled correctly. Probably requires implementing
-   custom CoordinatorLayout Behavior.
-   
- - `TODO`
